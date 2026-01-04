@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="አሰፋ ዲጂታል ቢንጎ ጨዋታ - Assefa Digital Bingo Game">
+    <title>አሰፋ ዲጂታል ቢንጎ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text amharic-text">እየጫነው ነው...</div>
+        </div>
+    </div>
+
+    <!-- Triple Border Container -->
+    <div class="border-container">
+        <div class="main-container">
+            <!-- Color Borders -->
+            <div class="page-border green"></div>
+            <div class="page-border yellow"></div>
+            <div class="page-border red"></div>
+
+            <!-- Page 0: Welcome -->
+            <div class="page-container active" id="page0">
+                <button class="help-circle-btn" onclick="showPage(5)">?</button>
+                <div class="page-content">
+                    <div class="welcome-content">
+                        <div class="game-title amharic-text">አሰፋ ዲጂታል ቢንጎ ጨዋታ</div>
+                        <div style="font-size: 14px; color: #ffd700; margin-bottom: 30px; text-align: center;">
+                            Assefa Gashaye Birhanie Digital Bingo Game (AGBDBG)
+                        </div>
+                        <button class="start-btn-circle" onclick="showPage(1)">
+                            <div style="font-size: 24px;">🎮</div>
+                        </button>
+                        <div class="connection-status">
+                            <span id="connectionStatus">🔴 ማገናኛ አልተገኘም</span>
+                        </div>
+                        <div class="developer-text amharic-text">አሰፋ ጋሻዬ ብርሃንነህ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other pages will be dynamically loaded -->
+        </div>
+    </div>
+
+    <!-- WebRTC Video Stream (Hidden by default) -->
+    <div id="rtcContainer" style="display: none;">
+        <video id="remoteVideo" autoplay playsinline></video>
+        <video id="localVideo" autoplay playsinline muted></video>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="config/config.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/game.js"></script>
+    <script type="module" src="js/websocket.js"></script>
+    <script type="module" src="js/rtc.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
