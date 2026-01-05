@@ -1,5 +1,14 @@
 // websocket.js - Complete WebSocket communication module
-import { GAME_CONFIG, WS_URL, WS_BACKUP_URLS, API_BASE_URL, API_BACKUP_URLS } from './config.js';
+import { GAME_CONFIG, API_BASE_URL, API_BACKUP_URLS } from './config.js';
+
+// WebSocket URL configuration - UPDATED to use provided backend
+const WS_URL = "wss://ameng-gogs-mel3-66.deno.dev/";
+const WS_BACKUP_URLS = [
+    "wss://ameng-gogs-mel3-66.deno.dev/",
+    // Add fallback URLs here if needed, but using same URL for primary and backup
+    // "wss://backup1.example.com/",
+    // "wss://backup2.example.com/"
+];
 
 // Connection state
 let socket = null;
@@ -237,6 +246,11 @@ function handleWebSocketMessage(event) {
                 break;
             case 'pong':
                 // Handle pong response
+                console.log('Pong received, connection healthy');
+                break;
+            case 'ping':
+                // Respond to ping
+                sendMessage({ type: 'pong', timestamp: Date.now() });
                 break;
             default:
                 console.warn('Unknown message type:', message.type);
@@ -257,6 +271,11 @@ function handleWelcome(message) {
     if (message.playerId) {
         gameState.playerId = message.playerId;
         localStorage.setItem('playerId', message.playerId);
+    }
+    
+    // Update connection status with server info
+    if (message.serverInfo) {
+        updateConnectionStatus('connected', `Connected to ${message.serverInfo.name || 'server'}`);
     }
 }
 
@@ -975,3 +994,6 @@ if (typeof window !== 'undefined') {
         EVENTS
     };
 }
+
+// Export WS_URL for other modules to use
+export { WS_URL, WS_BACKUP_URLS };
